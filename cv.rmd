@@ -22,7 +22,7 @@ source("cv_printing_functions.r")
 # Read in all data and initialize a CV printer object
 CV <- create_CV_object(
   data_location = "https://docs.google.com/spreadsheets/d/1IDKm2jIqQKrlsQ7omx2sGlZ8qCaTS8fJRe1dyG0Fnm0/edit?usp=sharing",  
-  pdf_mode = TRUE
+  pdf_mode = params$pdf_mode
 )
 
 ```
@@ -59,7 +59,7 @@ if(params$pdf_mode){
 }
 ```
 
-Contact {#contact}
+Contatos {#contact}
 --------------------------------------------------------------------------------
 
 ```{r}
@@ -68,7 +68,7 @@ CV |> print_contact_info()
 
 
 
-Language Skills {#skills}
+Linguagens {#skills}
 --------------------------------------------------------------------------------
 
 ```{r}
@@ -76,17 +76,51 @@ CV |> print_skill_bars()
 ```
 
 
+Modelagem {#molskills}
+--------------------------------------------------------------------------------
+
+```{r}
+CV$molskill <- tibble::tribble(
+  ~skill, ~level,
+  "Reg. - Linear",   4,
+  "Reg. - Não linear",   3,
+  "Reg. - Efeito misto",   3,
+  "ML - Random forest",   4,
+  "ML - Redes neurais",   1
+  )
+
+print_molskill_bars <- function(
+  cv, 
+  out_of = 5, 
+  bar_color = "#969696", 
+  bar_background = "#d9d9d9",
+  glue_template = "default"
+  ) {
+    if (glue_template == "default") {
+    glue_template <- "
+<div
+class = 'skill-bar'
+style = \"background:linear-gradient(to right,
+           {bar_color} {width_percent}%,
+           {bar_background} {width_percent}% 100%)\"
+>{skill}</div>"
+  }
+
+  cv$molskill |>
+    dplyr::mutate(width_percent = round(100 * as.numeric(level) / out_of)) |>
+    glue::glue_data(glue_template) |>
+    print()
+
+  invisible(cv)
+}
+
+CV |> print_molskill_bars()
+```
 
 Disclaimer {#disclaimer}
 --------------------------------------------------------------------------------
 
 Made with the R package [**pagedown**](https://github.com/rstudio/pagedown). 
-
-The source code is available [on github.com/nstrayer/cv](https://github.com/nstrayer/datadrivencv).
-
-Last updated on `r Sys.Date()`.
-
-
 
 Main
 ================================================================================
@@ -99,9 +133,7 @@ Eduardo Girardi {#title}
 CV <- print_text_block(CV, "intro") 
 ```
 
-
-
-Education {data-icon=graduation-cap data-concise=true}
+Formação {data-icon=graduation-cap data-concise=true}
 --------------------------------------------------------------------------------
 
 ```{r}
@@ -109,86 +141,23 @@ CV <- print_section(CV, 'education')
 ```
 
 
-
-Research Experience {data-icon=laptop}
+Experiencia Proficional {data-icon=suitcase}
 --------------------------------------------------------------------------------
-
-```{r}
-CV <- print_section(CV, 'research_positions')
-```
-
-
-
-Industry Experience {data-icon=suitcase}
---------------------------------------------------------------------------------
-
-::: aside
-```{r}
-CV <- print_text_block(CV, 'industy_experience_aside')
-```
-:::
 
 ```{r}
 CV <- print_section(CV, 'industry_positions')
 ```
+
+<br>
+
 
 <!-- These breaks just force a new page so section doesnt get cut off -->
 <br>
 <br>
 <br>
 
-Teaching Experience {data-icon=chalkboard-teacher}
---------------------------------------------------------------------------------
 
-::: aside
-```{r}
-CV <- print_text_block(CV, 'teaching_experience_aside')
-```
-:::
-
-```{r}
-CV <- print_section(CV, 'teaching_positions')
-```
-
-
-
-Selected Data Science Writing {data-icon=chart-line}
---------------------------------------------------------------------------------
-
-::: aside
-```{r}
-CV <- print_text_block(CV, 'data_science_writing_aside')
-```
-:::
-
-```{r}
-CV <- print_section(CV, 'data_science_writings')
-```
-
-
-
-Selected Press (About)  {data-icon=newspaper}
---------------------------------------------------------------------------------
-
-```{r}
-CV <- print_section(CV, 'about_me_press')
-```
-
-
-<br>
-<br>
-
-
-Selected Press (By)  {data-icon=newspaper}
---------------------------------------------------------------------------------
-
-```{r}
-CV <- print_section(CV, 'by_me_press')
-```
-
-
-
-Selected Publications, Posters, and Talks {data-icon=book}
+Publicaçoes selecionadas {data-icon=book}
 --------------------------------------------------------------------------------
 
 ```{r}

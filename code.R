@@ -9,3 +9,9 @@ datadrivencv::use_datadriven_cv(
     source_location ="https://github.com/eduardogirardi/meucv/"
 )
 
+# ALterar:
+# render_cv.r  - linha 11: 
+# output_file = "index.html")
+# 
+# dd_cv.css - linha 15: 
+# --sidebar-width: 16rem; /* Shrink sidebar width  */
