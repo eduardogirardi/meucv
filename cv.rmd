@@ -141,7 +141,7 @@ CV <- print_section(CV, 'education')
 ```
 
 
-Experiencia Proficional {data-icon=suitcase}
+Experiencia Profissional {data-icon=suitcase}
 --------------------------------------------------------------------------------
 
 ```{r}

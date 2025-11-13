@@ -12,7 +12,7 @@
   --header-text-family: "Lora", serif;
   --main-text-color: #444;
   --header-text-color: #000;
-  --sidebar-width: 12rem; /* Shrink sidebar width  */
+  --sidebar-width: 14rem; /* Shrink sidebar width  */
   --sidebar-background-color: hsl(210, 100%, 98%); /* Make sidebar blue */
   --sidebar-horizontal-padding: 0.01in; /* Reduce sidebar padding */
   --decorator-outer-dim: 8px; /* Make position deliniating circles larger */
